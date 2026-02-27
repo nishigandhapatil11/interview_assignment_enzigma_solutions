@@ -1,0 +1,88 @@
+<section class="slds-card slds-p-around_medium slds-m-bottom_medium">
+  <header class="slds-card__header slds-grid">
+    <div class="slds-media slds-media_center slds-has-flexi-truncate">
+      <div class="slds-media__body">
+        <h2 class="slds-text-heading_medium slds-truncate" title="{{ task.id ? 'Edit' : 'Add' }} Task">
+          {{ task.id ? 'Edit' : 'Add' }} Task
+        </h2>
+      </div>
+    </div>
+  </header>
+  <div class="slds-card__body slds-card__body_inner">
+    <form #taskForm="ngForm" (ngSubmit)="onSubmit(taskForm)" class="slds-form_stacked" novalidate>
+      <div class="slds-grid slds-wrap slds-gutters_small slds-m-bottom_small">
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="title">
+              Title <span class="slds-required">*</span>
+            </label>
+            <div class="slds-form-element__control">
+              <input 
+                id="title"
+                type="text"
+                [(ngModel)]="task.title"
+                name="title"
+                #title="ngModel"
+                required
+                class="slds-input"
+              />
+              <div class="slds-form-element__help slds-text-color_error"
+                  *ngIf="title.invalid && (title.dirty || title.touched)">
+                Title is required.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-size_1-of-1">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="description">Description</label>
+            <div class="slds-form-element__control">
+              <textarea id="description" [(ngModel)]="task.description" name="description" class="slds-textarea" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-2">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="dueDate">Due Date <span class="slds-required">*</span></label>
+            <div class="slds-form-element__control">
+              <input id="dueDate" type="date" [(ngModel)]="task.dueDate" name="dueDate" class="slds-input"  required/>
+              <div class="slds-form-element__help slds-text-color_error" *ngIf="title.invalid && (title.dirty || title.touched)">
+                Due date is required.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-2">
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="priority">Priority</label>
+            <div class="slds-form-element__control">
+              <select id="priority" [(ngModel)]="task.priority" name="priority" #priority="ngModel" required class="slds-select">
+                <option value="" disabled>Select priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+              <div class="slds-form-element__help slds-text-color_error" *ngIf="priority.invalid && (priority.dirty || priority.touched)">
+                Priority is required.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="slds-col slds-size_1-of-1">
+          <div class="slds-form-element">
+            <label class="slds-checkbox__label">
+              <input type="checkbox" [(ngModel)]="task.isCompleted" name="isCompleted" class="slds-checkbox__input" />
+              <span class="slds-checkbox_faux"></span>
+              <span class="slds-form-element__label slds-m-left_x-small">Completed</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="slds-grid slds-grid_align-end">
+        <div class="slds-col">
+          <button type="submit" class="slds-button slds-button_brand" [disabled]="taskForm.invalid">{{ task.id ? 'Update' : 'Add' }} Task</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

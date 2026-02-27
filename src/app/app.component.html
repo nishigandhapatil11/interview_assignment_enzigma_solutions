@@ -1,0 +1,58 @@
+<div class="app-container slds-p-around_large">
+  <div class="slds-grid slds-grid_align-spread slds-m-bottom_large slds-align_absolute-center">
+    <h1 class="slds-text-heading_large slds-text-align_center">To-Do List Application</h1>
+  </div>
+  <div class="slds-m-bottom_medium">
+    <button class="slds-button slds-button_brand" (click)="openForm()">Add Task</button>
+  </div>
+  <app-task-list
+    (taskSelected)="openForm($event)"
+    (viewTask)="openDetail($event)">
+  </app-task-list>
+  <div class="slds-modal slds-fade-in-open" *ngIf="isFormModalOpen" role="dialog" aria-modal="true">
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <h2 class="slds-text-heading_medium">{{ currentTask?.id ? 'Edit' : 'Add' }} Task</h2>
+      </header>
+      <div class="slds-modal__content">
+        <app-task-form
+          [selectedTask]="currentTask"
+          (saved)="onFormSaved()">
+        </app-task-form>
+      </div>
+      <footer class="slds-modal__footer">
+        <button class="slds-button slds-button_neutral" (click)="closeForm()">Cancel</button>
+      </footer>
+    </div>
+  </div>
+  <div class="slds-backdrop slds-backdrop_open" *ngIf="isFormModalOpen"></div>
+  <div class="slds-modal slds-fade-in-open" *ngIf="isDetailModalOpen" role="dialog" aria-modal="true">
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <h2 class="slds-text-heading_medium">Task Details</h2>
+      </header>
+      <div class="slds-modal__content">
+        <dl class="slds-list_horizontal slds-wrap">
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Title">Title:</dt>
+          <dd class="slds-item_detail slds-truncate" title="{{detailTask?.title}}">{{detailTask?.title}}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Description">Description:</dt>
+          <dd class="slds-item_detail slds-truncate" title="{{detailTask?.description}}">{{detailTask?.description || '-'}}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Due Date">Due Date:</dt>
+          <dd class="slds-item_detail">
+            {{ detailTask?.dueDate ? (detailTask?.dueDate | date:'mediumDate') : '-' }}
+          </dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Priority">Priority:</dt>
+          <dd class="slds-item_detail">{{ detailTask?.priority || '-' }}</dd>
+          <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Status">Status:</dt>
+          <dd class="slds-item_detail">{{ detailTask?.isCompleted ? 'Completed' : 'Pending' }}</dd>
+        </dl>
+      </div>
+      <footer class="slds-modal__footer">
+        <button class="slds-button slds-button_neutral" (click)="closeDetail()">Close</button>
+        <button class="slds-button slds-button_brand" (click)="editFromDetail()">Edit</button>
+      </footer>
+    </div>
+  </div>
+  <div class="slds-backdrop slds-backdrop_open" *ngIf="isDetailModalOpen"></div>
+</div>
+

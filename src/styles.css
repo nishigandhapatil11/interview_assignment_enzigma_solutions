@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* SLDS-friendly global styles */
+body {
+	background: #f4f6f9;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+	max-width: 980px;
+	margin: 2rem auto;
+	padding: 1rem;
+}
